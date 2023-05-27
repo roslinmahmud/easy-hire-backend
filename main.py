@@ -1,7 +1,8 @@
-from fastapi import FastAPI
 from pyresparser import ResumeParser
+from fastapi import FastAPI
 
 app = FastAPI()
+
 
 @app.get("/")
 async def root():

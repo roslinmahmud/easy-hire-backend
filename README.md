@@ -2,17 +2,12 @@
 A tool that can automatically screen and rank resumes based on relevance to a job description.
 
 ## Requirements
-* Python 3.7+
-* FastAPI
+- Python 3.7+
+- [PyCharm](https://www.jetbrains.com/pycharm/download) is highly recommended for development. 
 
 ## Installation
-#### install FastAPI with all the optional dependencies and features
-
-```
-pip install "fastapi[all]" 
-```
-```
-pip install pyresparser
-pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1/en_core_web_sm-2.3.1.tar.gz
-pip install spacy==2.3.5
-```
+- Activate virtual environment
+  - Windows Powershell: `venv\Scripts\activate.bat`
+  - Windows Cmd: `venv\Scripts\Activate.ps1`
+  - Mac / Linux: `source myvenv/bin/activate`
+- Install packages with `pip install -r requirements.txt`
