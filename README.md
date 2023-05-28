@@ -8,6 +8,6 @@ A tool that can automatically screen and rank resumes based on relevance to a jo
 ## Installation
 - Activate virtual environment
   - Windows Powershell: `venv\Scripts\activate.bat`
-  - Windows Cmd: `venv\Scripts\Activate.ps1`
+  - Windows Cmd: `venv\Scripts\activate.bat`
   - Mac / Linux: `source myvenv/bin/activate`
 - Install packages with `pip install -r requirements.txt`
