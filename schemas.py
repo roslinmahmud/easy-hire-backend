@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from typing import List
+
 
 class ResumeBase(BaseModel):
     email: str
@@ -9,8 +11,10 @@ class ResumeBase(BaseModel):
     about: str
     resume: str
 
+
 class ResumeCreate(ResumeBase):
-    pass    
+    pass
+
 
 class Resume(ResumeBase):
     id: int
@@ -19,14 +23,17 @@ class Resume(ResumeBase):
     class Config:
         orm_mode = True
 
+
 class JobBase(BaseModel):
     title: str
     description: str
-    responsibilities: str
-    requirements: str
+    responsibilities: List[str]
+    requirements: List[str]
+
 
 class JobCreate(JobBase):
     pass
+
 
 class Job(JobBase):
     id: int
@@ -34,4 +41,3 @@ class Job(JobBase):
 
     class Config:
         orm_mode = True
-

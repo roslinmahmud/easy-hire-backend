@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, ARRAY
 from database import Base
 from sqlalchemy.orm import relationship
 
@@ -8,8 +8,8 @@ class Job(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
     description = Column(String)
-    responsibilities = Column(String)
-    requirements = Column(String)
+    responsibilities = Column(ARRAY(String))
+    requirements = Column(ARRAY(String))
 
     resumes = relationship("Resume", back_populates="job")
 
