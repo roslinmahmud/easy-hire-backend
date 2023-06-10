@@ -30,6 +30,11 @@ async def upload_resume(resume: UploadFile):
     return {"filename": resume.filename}
 
 
-@app.post('/jobs', response_model=schemas.Job)
+@app.get('/jobs')
+def get_jobs(db: Session = Depends(get_db)):
+    return crud.get_jobs(db=db)
+
+
+@app.post('/job', response_model=schemas.Job)
 def create_job(job: schemas.JobCreate, db: Session = Depends(get_db)):
     return crud.create_job(db=db, job=job)

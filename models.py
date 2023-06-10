@@ -13,6 +13,7 @@ class Job(Base):
 
     resumes = relationship("Resume", back_populates="job")
 
+
 class Resume(Base):
     __tablename__ = "resumes"
     id = Column(Integer, primary_key=True, index=True)
