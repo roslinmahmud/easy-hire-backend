@@ -44,6 +44,7 @@ async def upload_resume(job_id: int, resumes: List[UploadFile]):
         print(file_location)
         with open(file_location, "wb") as buffer:
             shutil.copyfileobj(resume.file, buffer)
+            crud.parse_resume(db=Depends(get_db), job_id=job_id, path=file_location)
     return {"filename": 'yeeeah'}
 
 
