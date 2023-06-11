@@ -1,5 +1,8 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import asc
+import os
 
+from pyresparser import ResumeParser
 import models, schemas
 
 
@@ -38,3 +41,15 @@ def update_job(db: Session, job_id: int, job: schemas.JobCreate):
     db.query(models.Job).filter(models.Job.id == job_id).update(job.dict(exclude_unset=True))
     db.commit()
     return db_job
+
+
+def get_sorted_resumes(job_id: int, db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Resume).filter(models.Resume.job_id == job_id).order_by(
+        asc(models.Resume.sort_order)).offset(skip).limit(limit).all()
+
+def parse_resume(path):
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    target_directory = os.path.join(current_directory, path)
+    print("Processing file:", target_directory)
+    data = ResumeParser(target_directory).get_extracted_data()
+    print(data)
