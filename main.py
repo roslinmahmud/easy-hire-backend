@@ -49,3 +49,13 @@ def get_jobs(db: Session = Depends(get_db)):
 @app.post('/job', response_model=schemas.Job)
 def create_job(job: schemas.JobCreate, db: Session = Depends(get_db)):
     return crud.create_job(db=db, job=job)
+
+
+@app.get('/job/{job_id}')
+def get_job(job_id: int, db: Session = Depends(get_db)):
+    return crud.get_job(db=db, job_id=job_id)
+
+
+@app.put('/job/{job_id}', response_model=schemas.Job)
+def create_job(job_id: int, job: schemas.JobCreate, db: Session = Depends(get_db)):
+    return crud.create_job(db=db, job=job)
