@@ -57,5 +57,5 @@ def get_job(job_id: int, db: Session = Depends(get_db)):
 
 
 @app.put('/job/{job_id}', response_model=schemas.Job)
-def create_job(job_id: int, job: schemas.JobCreate, db: Session = Depends(get_db)):
-    return crud.create_job(db=db, job=job)
+def update_job(job_id: int, job: schemas.JobCreate, db: Session = Depends(get_db)):
+    return crud.update_job(db=db, job_id=job_id, job=job)
