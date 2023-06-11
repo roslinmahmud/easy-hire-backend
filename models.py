@@ -23,6 +23,8 @@ class Resume(Base):
     skills = Column(String)
     total_experience = Column(String)
     degree = Column(String)
+    sort_order = Column(Integer)
+    url = Column(String)
 
     job_id = Column(Integer, ForeignKey("jobs.id"))
     job = relationship("Job", back_populates="resumes")
