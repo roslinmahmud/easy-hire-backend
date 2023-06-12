@@ -48,13 +48,13 @@ def get_sorted_resumes(job_id: int, db: Session, skip: int = 0, limit: int = 100
         asc(models.Resume.sort_order)).offset(skip).limit(limit).all()
 
 
-def parse_resume(db: Session, job_id, path):
+def parse_resume(job_id: int, path: str, db: Session):
     data = ResumeParser(path).get_extracted_data()
 
     data['job_id'] = job_id
-    # Needs to be fixed
-    db_resume = models.Resume(data)
+    data['sort_order'] = 0
+    data['url'] = path
+    db_resume = models.Resume(**data)
     db.add(db_resume)
     db.commit()
     db.refresh(db_resume)
-    return db_resume
