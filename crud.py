@@ -47,9 +47,14 @@ def get_sorted_resumes(job_id: int, db: Session, skip: int = 0, limit: int = 100
     return db.query(models.Resume).filter(models.Resume.job_id == job_id).order_by(
         asc(models.Resume.sort_order)).offset(skip).limit(limit).all()
 
-def parse_resume(path):
-    current_directory = os.path.dirname(os.path.abspath(__file__))
-    target_directory = os.path.join(current_directory, path)
-    print("Processing file:", target_directory)
-    data = ResumeParser(target_directory).get_extracted_data()
-    print(data)
+
+def parse_resume(job_id: int, path: str, db: Session):
+    data = ResumeParser(path).get_extracted_data()
+
+    data['job_id'] = job_id
+    data['sort_order'] = 0
+    data['url'] = path
+    db_resume = models.Resume(**data)
+    db.add(db_resume)
+    db.commit()
+    db.refresh(db_resume)
