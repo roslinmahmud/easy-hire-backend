@@ -4,6 +4,7 @@ import os
 
 from pyresparser import ResumeParser
 import models, schemas
+from nlp_model import get_sorted_candidates
 
 
 def get_resumes(db: Session, skip: int = 0, limit: int = 100):
@@ -49,6 +50,7 @@ def update_job(db: Session, job_id: int, job: schemas.JobCreate):
 
 
 def get_sorted_resumes(job_id: int, db: Session, skip: int = 0, limit: int = 100):
+    sort_resumes(job_id, db)
     return db.query(models.Resume).filter(models.Resume.job_id == job_id).order_by(
         asc(models.Resume.sort_order)).offset(skip).limit(limit).all()
 
@@ -63,3 +65,15 @@ def parse_resume(job_id: int, path: str, db: Session):
     db.add(db_resume)
     db.commit()
     db.refresh(db_resume)
+
+
+def sort_resumes(job_id: int, db: Session):
+    db_job = db.query(models.Job).filter(models.Job.id == job_id).first()
+    sorted_candidates = get_sorted_candidates(db_job)
+
+    for i in range(len(sorted_candidates)):
+        resume = db.query(models.Resume).filter(models.Resume.id == sorted_candidates[i][0]['id']).first()
+        if resume is not None:
+            resume.sort_order = i
+            db.commit()
+
