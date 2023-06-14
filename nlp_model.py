@@ -64,10 +64,4 @@ def get_sorted_candidates(job_descriptions: models.Job):
     # Sort candidates based on similarity scores (from most to least favorable)
     sorted_candidates = sorted(candidates_with_scores, key=lambda x: x[1], reverse=True)
 
-    for candidate in sorted_candidates:
-        print(candidate[0], candidate[1])
-
-    
-
     return sorted_candidates
-

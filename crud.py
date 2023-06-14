@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import asc
-import os
 
 from pyresparser import ResumeParser
 import models, schemas
@@ -49,12 +48,6 @@ def update_job(db: Session, job_id: int, job: schemas.JobCreate):
     return db_job
 
 
-def get_sorted_resumes(job_id: int, db: Session, skip: int = 0, limit: int = 100):
-    sort_resumes(job_id, db)
-    return db.query(models.Resume).filter(models.Resume.job_id == job_id).order_by(
-        asc(models.Resume.sort_order)).offset(skip).limit(limit).all()
-
-
 def parse_resume(job_id: int, path: str, db: Session):
     data = ResumeParser(path).get_extracted_data()
 
@@ -67,8 +60,14 @@ def parse_resume(job_id: int, path: str, db: Session):
     db.refresh(db_resume)
 
 
+def get_sorted_resumes(job_id: int, db: Session, skip: int = 0, limit: int = 100):
+    sort_resumes(job_id, db)
+    return db.query(models.Resume).filter(models.Resume.job_id == job_id).order_by(
+        asc(models.Resume.sort_order)).offset(skip).limit(limit).all()
+
+
 def sort_resumes(job_id: int, db: Session):
-    db_job = db.query(models.Job).filter(models.Job.id == job_id).first()
+    db_job = get_job(db, job_id)
     sorted_candidates = get_sorted_candidates(db_job)
 
     for i in range(len(sorted_candidates)):
