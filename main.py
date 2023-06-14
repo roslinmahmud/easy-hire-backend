@@ -59,7 +59,7 @@ async def delete_resume(resume_id: int, db: Session = Depends(get_db)):
 
 
 @app.get('/jobs')
-def get_jobs(db: Session = Depends(get_db)):
+def get_all_jobs(db: Session = Depends(get_db)):
     return crud.get_jobs(db=db)
 
 
