@@ -13,6 +13,11 @@ def get_resumes(db: Session, skip: int = 0, limit: int = 100):
 def get_resume(db: Session, resume_id: int):
     return db.query(models.Resume).filter(models.Resume.id == resume_id).first()
 
+def delete_resume(db: Session, resume_id: int):
+    db.query(models.Resume).filter(models.Resume.id == resume_id).delete()
+    db.commit()
+    return {"message": "Resume deleted"}
+
 
 def get_resume_by_job_id(db: Session, job_id: int):
     return db.query(models.Resume).filter(models.Resume.job_id == job_id).first()
