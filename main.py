@@ -3,6 +3,7 @@ import os
 
 from fastapi import Depends, FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -24,6 +25,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/resumes", StaticFiles(directory="resumes", html = True), name="resumes")
 
 
 # Dependency
